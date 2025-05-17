@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Browse and download full games. Join our community of gamers!">
-    <meta name="keywords" content="download games, free games, browse games, gaming community, PS3 games">
+    <meta name="description" content="Browse and download full games. Find details like developer, publisher, and release date.">
+    <meta name="keywords" content="download games, game details, browse games, gaming community, PS3 games">
     <title>GameHub - Browse & Download Games</title>
     <link rel="stylesheet" href="./css/styles.css">
-    <link rel="icon" href="./icons/game-controller-icon.png" type="image/png"> <!-- More generic game icon -->
+    <link rel="icon" href="./icons/game-controller-icon.png" type="image/png">
 </head>
 <body>
     <header>
-        <h1>GameHub</h1> <!-- Changed from GameSaves -->
+        <h1>GameHub</h1>
         <h2>BTW PS3 supported games available!</h2>
         <nav>
             <ul>
@@ -28,11 +28,11 @@
         <div class="container">
             <section class="intro">
                 <h2>Browse Games for Download</h2>
-                <p>Discover and download full games for various platforms.</p>
+                <p>Discover and download full games for various platforms. Filter by details like platform, genre, developer, and more!</p>
             </section>
 
             <section class="search-section">
-                <h2>Search Games</h2>
+                <h2>Search Games (by Title, Developer, or Publisher)</h2>
                 <form id="search-form" onsubmit="return searchGames(event);">
                     <input type="text" id="search-input" placeholder="Search for a game..." required aria-label="Search for a game">
                     <button type="submit">Search</button>
@@ -43,7 +43,7 @@
                 <section class="platform-filter filter-section">
                     <h3>Filter by Platform</h3>
                     <label for="platform">Choose a platform:</label>
-                    <select id="platform" onchange="filterByPlatformAndType()">
+                    <select id="platform" onchange="filterGames()">
                         <option value="all">All Platforms</option>
                         <option value="ps3">PlayStation 3</option>
                         <option value="ps2">PlayStation 2</option>
@@ -57,27 +57,11 @@
                 <section class="game-category-filter filter-section">
                     <h3>Filter by Game Category</h3>
                     <label for="game-category">Choose a game category:</label>
-                    <select id="game-category" onchange="filterByPlatformAndType()">
+                    <select id="game-category" onchange="filterGames()">
                         <option value="all">All Game Categories</option>
                         <option value="action">Action</option>
                         <option value="action-adventure">Action adventure</option>
-                        <option value="Action role-playing">Action role-playing</option>
-                        <option value="racing">Racing</option>
-                        <option value="adventure">Adventure</option>
-                        <option value="Puzzle">Puzzle</option>
-                        <option value="Simulator">Simulator</option>
-                        <option value="racing-simulator">Racing simulator</option>
-                        <option value="Combat flight simulation">Combat flight simulation</option>
-                        <option value="Survival Horror">Survival Horror</option>
-                        <option value="Beat 'em up">Beat 'em up</option>
-                        <option value="Third-person shooter">Third-person shooter</option>
-                        <option value="Hack and slash">Hack and slash</option>
-                        <option value="Role-playing">Role-playing</option>
-                        <option value="First-person shooter">First-person shooter</option>
-                        <option value="Metroidvania">Metroidvania</option>
-                        <option value="Real-time tactics">Real-time tactics</option>
-                        <option value="Fighting">Fighting</option>
-                        <option value="Tactical role-playing game">Tactical role-playing game</option>
+                        <!-- Add all your other categories -->
                         <option value="Strategy">Strategy</option>
                     </select>
                 </section>
@@ -85,67 +69,123 @@
                 <section class="game-type-filter filter-section">
                     <h3>Filter by Game Type</h3>
                     <label for="game-type">Choose a game type:</label>
-                    <select id="game-type" onchange="filterByPlatformAndType()">
+                    <select id="game-type" onchange="filterGames()">
                         <option value="all">All Game Types</option>
                         <option value="single-player">Single Player</option>
-                        <option value="Single-player+ 2 player co-op">Co-op</option> <!-- Simplified label -->
+                        <option value="co-op">Co-op</option>
+                        <option value="multiplayer-local">Local Multiplayer</option>
+                        <option value="multiplayer-online">Online Multiplayer</option>
                     </select>
                 </section>
 
-                <!-- Game Mod Status Filter Section REMOVED as it's not relevant for full games -->
+                <!-- New Filter: Multiplayer Status -->
+                <section class="multiplayer-filter filter-section">
+                    <h3>Filter by Multiplayer</h3>
+                    <label for="multiplayer-status">Multiplayer Type:</label>
+                    <select id="multiplayer-status" onchange="filterGames()">
+                        <option value="all">Any</option>
+                        <option value="none">Single Player Only</option>
+                        <option value="local">Local Multiplayer/Co-op</option>
+                        <option value="online">Online Multiplayer/Co-op</option>
+                        <option value="both">Local & Online</option>
+                    </select>
+                </section>
+
+                <!-- New Filter: Release Year (Example - could be more complex) -->
+                <section class="release-year-filter filter-section">
+                    <h3>Filter by Release Year (Example)</h3>
+                    <label for="release-year">Game Released After:</label>
+                    <select id="release-year" onchange="filterGames()">
+                        <option value="all">Any Year</option>
+                        <option value="2000">2000</option>
+                        <option value="2005">2005</option>
+                        <option value="2010">2010</option>
+                        <option value="2015">2015</option>
+                    </select>
+                </section>
 
             </div> <!-- .filters-wrapper end -->
 
             <section class="game-boxes">
                 <h2>Available Games</h2>
                 <div class="box-container">
-                    <!-- Example Game Box -->
-                    <div class="game-box" data-platform="ps3" data-category="action-adventure" data-type="single-player">
-                        <a href="./games/PS3/PROTOTYPE_BLES00269.pkg"> <!-- Hypothetical link to a game package -->
-                           <img src="./game_icons/PS3/PROTOTYPE.PNG" alt="PROTOTYPE Cover Art"> <!-- Path to game cover/icon -->
+                    <!-- Example Game Box with NEW data attributes and display -->
+                    <div class="game-box"
+                         data-platform="ps3"
+                         data-category="action-adventure"
+                         data-type="single-player"
+                         data-developer="Radical Entertainment"
+                         data-publisher="Activision"
+                         data-release="2009"
+                         data-multiplayer="none"> <!-- none, local, online, both -->
+                        <a href="./games/PS3/PROTOTYPE_BLES00269.pkg">
+                           <img src="./game_icons/PS3/PROTOTYPE.PNG" alt="PROTOTYPE Cover Art">
                         </a>
                         <h3>PROTOTYPE (PS3)</h3>
-                        <p class="game-box-description">Action-Adventure (Single Player). Unleash shapeshifting powers in this open-world epic.</p>
+                        <div class="game-meta">
+                            <p><strong>Dev:</strong> Radical Entertainment</p>
+                            <p><strong>Pub:</strong> Activision</p>
+                            <p><strong>Released:</strong> 2009</p>
+                            <p><strong>Multiplayer:</strong> None</p>
+                        </div>
+                        <p class="game-box-description">Unleash shapeshifting powers in this open-world epic.</p>
                         <a href="./games/PS3/PROTOTYPE_BLES00269.pkg" class="download-button">Download Game</a>
                     </div>
 
-                    <div class="game-box" data-platform="ps3" data-category="action-adventure" data-type="single-player">
-                        <a href="./games/PS3/PROTOTYPE2_BLES01532.iso"> <!-- Different file type example -->
+                    <div class="game-box"
+                         data-platform="ps3"
+                         data-category="action-adventure"
+                         data-type="single-player"
+                         data-developer="Radical Entertainment"
+                         data-publisher="Activision"
+                         data-release="2012"
+                         data-multiplayer="none">
+                        <a href="./games/PS3/PROTOTYPE2_BLES01532.iso">
                            <img src="./game_icons/PS3/PROTOTYPE2.PNG" alt="PROTOTYPE 2 Cover Art">
                         </a>
                         <h3>PROTOTYPE 2 (PS3)</h3>
-                        <p class="game-box-description">Action-Adventure (Single Player). Continue the visceral combat with new abilities.</p>
+                        <div class="game-meta">
+                            <p><strong>Dev:</strong> Radical Entertainment</p>
+                            <p><strong>Pub:</strong> Activision</p>
+                            <p><strong>Released:</strong> 2012</p>
+                            <p><strong>Multiplayer:</strong> None</p>
+                        </div>
+                        <p class="game-box-description">Continue the visceral combat with new abilities.</p>
                         <a href="./games/PS3/PROTOTYPE2_BLES01532.iso" class="download-button">Download Game</a>
                     </div>
 
-                    <div class="game-box" data-platform="ps3" data-category="action" data-type="single-player">
-                        <a href="./games/PS3/AFRO_SAMURAI_BLUS30264.pkg">
-                           <img src="./game_icons/PS3/AFRO_SAMURAI.PNG" alt="Afro Samurai Cover Art">
+                    <div class="game-box"
+                         data-platform="ps3"
+                         data-category="fighting"
+                         data-type="multiplayer-local"
+                         data-developer="CyberConnect2"
+                         data-publisher="Bandai Namco"
+                         data-release="2013"
+                         data-multiplayer="local"> <!-- 'local', 'online', 'both', 'none' -->
+                        <a href="./games/PS3/NARUTO_STORM3_BLUS31066.pkg">
+                           <img src="./game_icons/PS3/NARUTO_STORM3.PNG" alt="Naruto Storm 3 Cover Art">
                         </a>
-                        <h3>Afro Samurai (PS3)</h3>
-                        <p class="game-box-description">Action (Single Player). A stylish hack-and-slash adventure.</p>
-                        <a href="./games/PS3/AFRO_SAMURAI_BLUS30264.pkg" class="download-button">Download Game</a>
+                        <h3>Naruto Shippuden: Ultimate Ninja Storm 3 (PS3)</h3>
+                        <div class="game-meta">
+                            <p><strong>Dev:</strong> CyberConnect2</p>
+                            <p><strong>Pub:</strong> Bandai Namco</p>
+                            <p><strong>Released:</strong> 2013</p>
+                            <p><strong>Multiplayer:</strong> Local</p>
+                        </div>
+                        <p class="game-box-description">Epic ninja battles with a huge roster of characters.</p>
+                        <a href="./games/PS3/NARUTO_STORM3_BLUS31066.pkg" class="download-button">Download Game</a>
                     </div>
 
-                    <!-- Add ALL your other game listings here, following the new format -->
-                    <!-- Make sure to:
-                        1. Update href for the main link and download button to the game file.
-                        2. Update img src to the game's cover art/icon.
-                        3. Update alt text for the image.
-                        4. Update H3 to the game title.
-                        5. Update p.game-box-description with a brief game description.
-                        6. Remove the data-modded attribute (or ensure your JS doesn't use it).
+
+                    <!--
+                    FOR ALL YOUR OTHER GAME BOXES, ADD:
+                    data-developer="Game Developer Name"
+                    data-publisher="Game Publisher Name"
+                    data-release="YYYY" (just the year for simplicity with the example filter)
+                    data-multiplayer="none|local|online|both"
+
+                    And the <div class="game-meta">...</div> structure.
                     -->
-
-                    <!-- Example for the last one from gamesave, adapted -->
-                    <div class="game-box" data-platform="ps3" data-category="action" data-type="Single Player">
-                        <a href="./games/PS3/ZONE_OF_ENDERS_HD_BLUS30937.pkg">
-                            <img src="./game_icons/PS3/ZONE_OF_ENDERS_HD.PNG" alt="Zone of the Enders HD Collection Cover Art">
-                        </a>
-                        <h3>Zone of the Enders HD Collection (PS3)</h3>
-                        <p class="game-box-description">Action (Single Player). High-speed mech combat from Kojima Productions.</p>
-                        <a href="./games/PS3/ZONE_OF_ENDERS_HD_BLUS30937.pkg" class="download-button">Download Game</a>
-                    </div>
 
                 </div>
             </section>
@@ -153,9 +193,9 @@
     </div> <!-- .site-wrapper end -->
 
     <footer>
-        <p>© 2024 GameHub | Martin Petik - MIT License.</p>
+        <p>© 2025 GameHub | Martin Petik - MIT License.</p>
     </footer>
 
-    <script src="./js/script.js"></script> <!-- Ensure filterByModStatus() is removed or handled in JS -->
+    <script src="./js/script.js"></script>
 </body>
 </html>

@@ -49,10 +49,15 @@ function filterGames() {
         }
 
 
-        var releaseYearMatch = true; // Default to true
-        if (document.getElementById("release-year")) { // Check if filter exists
-            releaseYearMatch = releaseYearFilterValue === "all" || (releaseYear && parseInt(releaseYear) >= parseInt(releaseYearFilterValue));
-        }
+		var releaseYearMatch = true;
+		if (document.getElementById("release-year")) {
+			if (releaseYearFilterValue === "this-year") {
+			var currentYear = new Date().getFullYear();
+			releaseYearMatch = parseInt(releaseYear) === currentYear;
+    } else {
+        releaseYearMatch = releaseYearFilterValue === "all" || (releaseYear && parseInt(releaseYear) === parseInt(releaseYearFilterValue));
+    }
+}
 
 
         var searchMatch = searchTerm === "" ||

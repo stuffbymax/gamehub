@@ -2,19 +2,19 @@
 * {
     margin: 0;
     padding: 0;
-    /* box-sizing: border-box; */ /* Keep commented for PS3 unless tested thoroughly */
+    /* box-sizing: border-box; */ /* Keep commented for PS3 unless tested thoroughly. If it *can* be enabled, it simplifies layout math. */
 }
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #101018; /* --bg-dark */
-    color: #e0e0e0; /* --color-light */
+    background-color: #101018; /* Directly from --bg-dark */
+    color: #e0e0e0; /* Directly from --color-light */
     line-height: 1.6;
     font-size: 16px;
     padding-bottom: 60px; /* Space for the footer. Adjust if footer's actual rendered height is different */
 }
 
-/* === CSS Variables (For your reference - PS3 will ignore these) === */
+/* CSS Variables were previously here. They are now replaced with direct values below for PS3 compatibility.
 :root {
     --color-accent: #77aaff;
     --color-light: #e0e0e0;
@@ -33,13 +33,14 @@ body {
     --button-hover-bg: #0077cc;
     --button-border: #004488;
 }
+*/
 
 /* === Layout Container (Simplified for PS3) === */
 .site-wrapper {
     width: 90%;
-    max-width: var(--max-width); /* PS3: 800px */
+    max-width: 800px; /* Directly from --max-width */
     margin: 0 auto;
-    padding: 0 10px;
+    padding: 0 10px; /* This padding means content area is slightly less than max-width unless box-sizing is border-box */
 }
 
 .container { /* Generic content container within site-wrapper */
@@ -48,11 +49,11 @@ body {
 
 /* === Header & Navigation === */
 header {
-    background-color: var(--bg-header); /* PS3: #003366 */
+    background-color: #003366; /* Directly from --bg-header */
     color: #fff;
     padding: 15px 0;
     text-align: center;
-    border-bottom: 2px solid #0055aa; /* Direct value, fine */
+    border-bottom: 2px solid #0055aa;
 }
 
 header h1 {
@@ -63,7 +64,7 @@ header h1 {
 header h2 {
     font-size: 1em;
     font-weight: normal;
-    color: #aabbcc; /* --color-muted (using direct for example) */
+    color: #aabbcc; /* Direct value, was similar to --color-muted */
 }
 
 nav {
@@ -77,7 +78,7 @@ nav ul {
 }
 
 nav ul li {
-    display: inline-block;
+    display: inline-block; /* PS3 safe way for horizontal menu */
     margin: 0 10px;
 }
 
@@ -90,112 +91,123 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: var(--color-accent); /* PS3: #77aaff */
+    color: #77aaff; /* Directly from --color-accent */
     text-decoration: underline;
 }
 
 /* === Intro Section & General Page Content Headers === */
-.intro, .page-content { /* .page-content for about, suggest, upload pages */
+.intro, .page-content {
     text-align: center;
     margin-bottom: 30px;
+    padding: 10px; /* Added some padding for better spacing if these are distinct visual blocks */
+    background-color: #181820; /* Example: Using --bg-subsection if these need a distinct background */
+    border: 1px solid #333340; /* Example: Using --border-color */
+    /* Consider if .intro and .page-content always need this background/border, or only when they are the main block */
 }
 
-.intro h1.construction-title, /* Specific for "UNDER CONSTRUCTION" banner on index */
+.intro h1.construction-title,
 .page-content h1.construction-title {
     background-color: #b0e0e6;
     color: #000;
     padding: 10px;
     font-size: 1.5em;
     margin-bottom: 15px;
+    border: none; /* Override potential border from parent .intro/.page-content */
 }
 
-.intro img, .page-content img { /* For construction GIF */
+.intro img, .page-content img {
     max-width: 100%;
     height: auto;
     margin-bottom: 15px;
 }
 
-.intro h2, .page-content h2 { /* General subheadings */
+.intro h2, .page-content h2 {
     font-size: 1.8em;
-    color: #fff;
+    color: #fff; /* Direct value */
     margin-bottom: 10px;
 }
-.page-content h1.page-title { /* For titles like "Browse Games", "About Us" */
-    color: var(--color-accent); /* PS3: #77aaff */
+.page-content h1.page-title {
+    color: #77aaff; /* Directly from --color-accent */
     font-size: 1.8em;
     margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 1px solid var(--border-accent); /* PS3: #444 */
+    border-bottom: 1px solid #444; /* Directly from --border-accent */
 }
-
 
 .intro p, .page-content p {
     font-size: 1em;
-    color: var(--color-text-muted); /* PS3: #c0c0c0 */
+    color: #c0c0c0; /* Directly from --color-text-muted */
+    line-height: 1.5; /* Added for readability within these blocks */
 }
 
 /* === Featured Game Section (index.html) === */
 .featured-game {
-    background-color: var(--bg-section); /* PS3: #1c1c24 */
-    border: 1px solid var(--border-color); /* PS3: #333340 */
-    padding: 15px;
+    background-color: #1c1c24; /* Directly from --bg-section */
+    border: 1px solid #333340; /* Directly from --border-color */
+    padding: 20px; /* Increased padding */
     margin-top: 20px;
+    margin-bottom: 30px; /* Added for consistency */
     text-align: left;
 }
 
-.featured-game h2 { /* "Featured Game: PROTOTYPE" */
-    color: var(--color-accent); /* PS3: #77aaff */
+.featured-game h2 {
+    color: #77aaff; /* Directly from --color-accent */
     font-size: 1.6em;
     text-align: center;
     margin-bottom: 15px;
-    border-bottom: 1px solid var(--border-accent); /* PS3: #444 */
+    border-bottom: 1px solid #444; /* Directly from --border-accent */
     padding-bottom: 10px;
 }
 
-.featured-game .game-details { /* Wrapper for image and text */
-    text-align: center;
+.featured-game .game-details {
+    text-align: center; /* Centers the image if it's narrower than its container */
 }
 
 .featured-game img {
-    max-width: 180px;
+    max-width: 220px; /* Increased size slightly */
     height: auto;
-    margin-bottom: 10px;
-    border: 1px solid #555;
+    margin-bottom: 15px; /* Increased spacing */
+    border: 2px solid #555; /* Slightly thicker border */
+    display: block; /* To allow margin auto centering if desired */
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.featured-game h3 { /* Game title in featured section */
+.featured-game h3 {
     font-size: 1.4em;
-    color: #fff;
+    color: #fff; /* Direct value */
     margin-bottom: 10px;
+    text-align: center; /* Center game title */
 }
 
-.featured-game p { /* Description/details in featured section */
+.featured-game p {
     font-size: 0.95em;
-    margin-bottom: 8px;
-    color: var(--color-text-muted); /* PS3: #c0c0c0 */
-    text-align: left;
+    margin-bottom: 10px; /* Increased spacing */
+    color: #c0c0c0; /* Directly from --color-text-muted */
+    text-align: left; /* Keep details left-aligned */
 }
 
 .featured-game p strong {
-    color: var(--color-text-label); /* PS3: #d0d0d0 */
+    color: #d0d0d0; /* Directly from --color-text-label */
 }
 
 /* === Search & Filter Sections (browser.html) === */
 .search-section,
 .filter-section {
-    background-color: var(--bg-section); /* PS3: #1c1c24 */
+    background-color: #1c1c24; /* Directly from --bg-section */
     padding: 15px;
     margin-bottom: 20px;
-    border: 1px solid var(--border-color); /* PS3: #333340 */
+    border: 1px solid #333340; /* Directly from --border-color */
 }
 
-.search-section h2, /* "Search Games" */
-.filter-section h3 { /* "Filter by Platform" etc. */
-    color: var(--color-accent); /* PS3: #77aaff */
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid var(--border-accent); /* PS3: #444 */
+.search-section h2,
+.filter-section h3 {
+    color: #77aaff; /* Directly from --color-accent */
+    margin-bottom: 15px; /* Increased spacing */
+    padding-bottom: 8px; /* Increased spacing */
+    border-bottom: 1px solid #444; /* Directly from --border-accent */
     text-align: center;
+    font-size: 1.4em; /* Standardized section heading size */
 }
 
 .search-section form {
@@ -203,160 +215,173 @@ nav ul li a:hover {
 }
 
 .search-section input[type="text"] {
-    padding: 8px;
+    padding: 10px; /* Increased padding */
     font-size: 1em;
     border: 1px solid #555;
-    background-color: var(--bg-form-element); /* PS3: #282830 */
-    color: var(--color-text-main); /* PS3: #e0e0e0 */
+    background-color: #282830; /* Directly from --bg-form-element */
+    color: #e0e0e0; /* Directly from --color-text-main */
     width: 60%;
-    margin-right: 5px;
+    margin-right: 10px; /* Increased spacing */
+    vertical-align: middle; /* Align with button */
 }
 
-.search-section button, /* General button style */
-.download-button {     /* For game download links styled as buttons */
-    padding: 8px 15px;
+.search-section button,
+.download-button {
+    padding: 10px 18px; /* Increased padding */
     font-size: 1em;
-    background-color: var(--button-bg); /* PS3: #0055aa */
+    background-color: #0055aa; /* Directly from --button-bg */
     color: white;
-    border: 1px solid var(--button-border); /* PS3: #004488 */
+    border: 1px solid #004488; /* Directly from --button-border */
     cursor: pointer;
     font-weight: bold;
     text-decoration: none;
     display: inline-block;
+    vertical-align: middle; /* Align with input */
 }
 .search-section button:hover,
 .download-button:hover {
-    background-color: var(--button-hover-bg); /* PS3: #0077cc */
+    background-color: #0077cc; /* Directly from --button-hover-bg */
 }
 
 .filter-section label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px; /* Increased spacing */
     font-weight: bold;
-    color: var(--color-text-muted); /* PS3: #c0c0c0 */
-    text-align: left; /* Align labels left for clarity */
+    color: #c0c0c0; /* Directly from --color-text-muted */
+    text-align: left;
 }
 
 .filter-section select {
-    padding: 8px;
+    padding: 10px; /* Increased padding */
     font-size: 1em;
     width: 100%;
     border: 1px solid #555;
-    background-color: var(--bg-form-element); /* PS3: #282830 */
-    color: var(--color-text-main); /* PS3: #e0e0e0 */
-    margin-bottom: 10px;
+    background-color: #282830; /* Directly from --bg-form-element */
+    color: #e0e0e0; /* Directly from --color-text-main */
+    margin-bottom: 15px; /* Increased spacing */
 }
 
 /* === Game Boxes Section (browser.html) === */
 .game-boxes {
     padding: 20px 0;
-    text-align: center;
+    text-align: center; /* This will center the .box-container if it's narrower than .game-boxes */
 }
-.game-boxes h2 { /* "Available Games" */
-    color: var(--color-accent); /* PS3: #77aaff */
-    margin-bottom: 20px;
+.game-boxes h2 {
+    color: #77aaff; /* Directly from --color-accent */
+    margin-bottom: 25px; /* Increased spacing */
+    font-size: 1.6em; /* Consistent with other major section titles */
 }
 
 .box-container {
-    text-align: center;
+    text-align: center; /* Centers the inline-block game boxes */
     font-size: 0; /* Whitespace removal hack for inline-block */
 }
 
 .game-box {
-    background-color: var(--bg-section); /* PS3: #1c1c24 */
-    border: 1px solid var(--border-color); /* PS3: #333340 */
-    text-align: center;
-    padding: 10px;
+    background-color: #1c1c24; /* Directly from --bg-section */
+    border: 1px solid #333340; /* Directly from --border-color */
+    text-align: left; /* Changed to left for content alignment within box */
+    padding: 15px; /* Increased padding */
     display: inline-block;
-    width: 220px; /* Adjust as needed, or use percentages for more responsiveness */
+    width: 220px; /* Base width for desktop */
     margin: 10px;
-    vertical-align: top;
+    vertical-align: top; /* Align boxes at the top if heights differ */
     font-size: 16px; /* Reset font-size from parent hack */
+    /* For more symmetry in height, all internal elements would need controlled heights, or use JS/Flexbox (not PS3 friendly) */
 }
 
 .game-box img {
     width: 100%;
     height: 180px;         /* Unified fixed height */
-    object-fit: cover;     /* Fill and crop */
+    object-fit: cover;     /* Fill and crop - PS3 might not support object-fit. Test! If not, images might stretch or need to be pre-cropped. */
     border: 1px solid #555;
-    background-color: #000;
+    background-color: #000; /* Fallback if image is transparent or fails to load */
     display: block;
     margin-bottom: 10px;
 }
 
-.game-box h3 { /* Game title in the box */
+.game-box h3 {
     font-size: 1.1em;
-    color: var(--color-text-main); /* PS3: #e0e0e0 */
-    margin-bottom: 5px;
-    height: 40px; /* Attempt to normalize height */
-    overflow: hidden;
+    color: #e0e0e0; /* Directly from --color-text-main */
+    margin-bottom: 8px; /* Increased spacing */
+    height: 40px; /* Fixed height to help normalize box sizes. Adjust as needed. */
+    overflow: hidden; /* Hides text that overflows the fixed height */
+    line-height: 1.2; /* Adjusted for two lines in 40px */
 }
 
-.game-box .game-meta { /* New section for dev, pub, release */
+.game-box .game-meta {
     font-size: 0.8em;
-    color: var(--color-text-muted); /* PS3: #c0c0c0 */
-    margin-bottom: 8px;
+    color: #c0c0c0; /* Directly from --color-text-muted */
+    margin-bottom: 10px; /* Increased spacing */
     text-align: left;
-    border-top: 1px dashed var(--border-accent); /* PS3: #444 */
-    padding-top: 5px;
-    margin-top: 5px;
+    border-top: 1px dashed #444; /* Directly from --border-accent */
+    padding-top: 8px; /* Increased spacing */
+    margin-top: 8px;  /* Increased spacing */
+    min-height: 70px; /* Attempt to give meta some consistent space, adjust as needed */
 }
 
 .game-box .game-meta p {
-    margin-bottom: 3px;
-    line-height: 1.3;
-    color: #b0b0b0; /* Slightly distinct meta text */
+    margin-bottom: 4px; /* Increased spacing */
+    line-height: 1.4; /* Adjusted line height */
+    color: #b0b0b0;
 }
 
 .game-box .game-meta p strong {
-    color: var(--color-text-label); /* PS3: #d0d0d0 */
+    color: #d0d0d0; /* Directly from --color-text-label */
 }
 
 .game-box p.game-box-description {
     font-size: 0.85em;
-    color: var(--color-text-muted); /* PS3: #c0c0c0 */
-    margin-bottom: 10px;
-    height: 60px; /* Attempt to normalize height */
-    overflow: hidden;
+    color: #c0c0c0; /* Directly from --color-text-muted */
+    margin-bottom: 12px; /* Increased spacing */
+    height: 60px; /* Fixed height. Adjust as needed. */
+    overflow: hidden; /* Hides overflowing text */
     text-align: left;
+    line-height: 1.4; /* Adjusted line height */
 }
+
+/* The download button is already styled globally */
+.game-box .download-button {
+    display: block; /* Make button take full width of its parent's available space (minus padding) */
+    text-align: center;
+    margin-top: auto; /* Tries to push to bottom if in a flex container, less effective here but good practice */
+}
+
 
 /* === Coming Soon Section (Placeholder pages) === */
 .coming-soon {
     text-align: center;
     margin-top: 30px;
-    padding: 15px;
-    background-color: var(--bg-subsection); /* PS3: #181820 */
-    border-top: 1px solid var(--border-color); /* PS3: #333340 */
+    padding: 20px; /* Increased padding */
+    background-color: #181820; /* Directly from --bg-subsection */
+    border: 1px solid #333340; /* Directly from --border-color */
 }
 
 .coming-soon p {
-    color: var(--color-muted); /* PS3: #aabbcc */
+    color: #aabbcc; /* Was --color-muted */
     font-style: italic;
+    font-size: 1.1em; /* Slightly larger */
 }
 
 /* === Footer === */
 footer {
-    background-color: var(--bg-header); /* PS3: #003366 */
+    background-color: #003366; /* Directly from --bg-header */
     color: white;
     text-align: center;
     padding: 10px 0;
-    border-top: 2px solid #0055aa; /* Direct value */
+    border-top: 2px solid #0055aa;
 
-    /* --- Fixed Footer --- */
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-    /* --- End Fixed Footer --- */
-    /* Note: Ensure body has padding-bottom >= footer height */
-    height: 40px; /* Example explicit height: 10px padding + 10px padding + ~20px line height */
+    height: 40px; /* Explicit height for fixed footer */
     z-index: 1000;
 }
 
 footer p {
     margin: 0;
-    line-height: 20px; /* Adjust based on padding and desired vertical alignment */
+    line-height: 20px; /* Should match (height - (padding-top + padding-bottom)) if padding were on p */
     font-size: 0.9em;
 }
 
@@ -364,8 +389,8 @@ footer p {
 /* === Mobile Styles (Responsive) === */
 @media screen and (max-width: 600px) {
     body {
-        padding-bottom: 70px; /* Adjust if mobile footer height is different */
-        font-size: 15px; /* Slightly smaller base font on mobile */
+        padding-bottom: 80px; /* Increased space for potentially taller mobile footer */
+        font-size: 15px;
     }
 
     .site-wrapper {
@@ -377,60 +402,72 @@ footer p {
     header h2 { font-size: 0.85em; }
 
     nav ul li {
-        display: block;
+        display: block; /* Stack nav items vertically */
         margin: 8px 0;
     }
     nav ul li a {
         display: block;
-        padding: 10px;
-        background-color: #004488; /* Direct value example */
+        padding: 12px; /* Increased padding */
+        background-color: #004488;
         border: 1px solid #0055aa;
     }
     nav ul li a:hover {
         background-color: #0055aa;
     }
 
+    .intro, .page-content {
+        padding: 15px; /* Adjust padding for mobile */
+    }
     .intro h1.construction-title,
     .page-content h1.construction-title { font-size: 1.2em; padding: 8px; }
-    .intro h2, .page-content h2 { font-size: 1.4em; }
+    .intro h2, .page-content h2 { font-size: 1.5em; } /* Adjusted */
     .intro p, .page-content p { font-size: 0.9em; }
-    .page-content h1.page-title { font-size: 1.4em; }
+    .page-content h1.page-title { font-size: 1.5em; } /* Adjusted */
 
 
     .search-section input[type="text"] {
-        width: calc(100% - 100px); /* Make room for button */
-        margin-bottom: 10px;
+        width: calc(100% - 110px); /* Adjusted for potentially wider button or more spacing */
+        margin-right: 5px; /* Keep some space */
+        margin-bottom: 10px; /* Stack above button if they wrap */
     }
     .search-section button {
-        width: auto; /* Allow button to size or set width: 80px; */
+        width: auto; /* Allow button to size to content */
+        padding: 10px 15px; /* Consistent with desktop button if desired, or slightly smaller */
     }
 
-    .filter-section { padding: 10px; }
-    .filter-section select { font-size: 0.95em; }
+    .filter-section { padding: 12px; }
+    .filter-section select { font-size: 0.95em; padding: 8px; }
 
 
     .game-box {
-        width: calc(50% - 20px); /* Two boxes per row, accounting for margin */
-        /* Or width: 100%; for single column on very small screens */
+        width: calc(50% - 16px); /* For two boxes per row. (8px margin on each side means 16px total for one box) */
         margin: 8px;
+        padding: 10px; /* Adjust padding for mobile boxes */
     }
-    .game-box img { height: 120px; }
-    .game-box h3 { font-size: 1em; height: 35px; }
-    .game-box .game-meta { font-size: 0.75em; }
-    .game-box p.game-box-description { font-size: 0.8em; height: 50px; }
+    .game-box img { height: 140px; } /* Adjusted height */
+    .game-box h3 { font-size: 1em; height: 36px; line-height: 1.2; } /* Adjusted */
+    .game-box .game-meta { font-size: 0.75em; min-height: 60px; padding-top: 6px; margin-top: 6px; } /* Adjusted */
+    .game-box p.game-box-description { font-size: 0.8em; height: 50px; line-height: 1.3; } /* Adjusted */
 
 
     footer {
         padding: 8px 0;
         height: auto; /* Let content define height, ensure body padding-bottom is sufficient */
+        min-height: 50px; /* Ensure it has some minimum height */
     }
     footer p { font-size: 0.8em; line-height: 1.5; }
 }
 
 @media screen and (max-width: 400px) {
     .game-box {
-        width: calc(100% - 16px); /* Single column for very small screens */
+        width: calc(100% - 16px); /* Single column, accounting for 8px margin L/R */
+        margin-left: auto; /* Center the single column box if site-wrapper has padding */
+        margin-right: auto;
     }
+    .game-box img { height: 160px; } /* Can be a bit taller in single column */
+    .game-box h3 { height: auto; min-height: 35px; } /* Allow title to wrap more */
+    .game-box p.game-box-description { height: auto; min-height: 50px; } /* Allow description to wrap more */
+
      .search-section input[type="text"] {
         width: 100%;
         margin-right: 0;
